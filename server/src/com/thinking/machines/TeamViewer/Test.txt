@@ -1,0 +1,27 @@
+while(true)
+{
+ socket=serverSocket.accept();
+ dIn=new DataInputStream(socket.getInputStream());
+ dIn.readFully(header);
+ tempData=new DataInputStream(header);
+ tempData.readByte();
+ size=tempData.readDouble();
+ dIn.flush();
+ tempData.flush();
+ tempData.close();
+ 
+ dOut=new DataOutputStream(socket.getOutputStream());
+ dOut.writeByte(1);
+ dOut.flush();
+ 
+ dIn.readFully(data);
+ tempData=new DataInputStream(data);
+ x=tempData.readDouble();
+ y=tempData.readDouble();
+ image=ImageIO.read(tempData); //bais se read kiya tha
+ show.setImage(image);
+ image.flush();
+ dIn.close();
+ dOut.close();
+ socket.close();
+}
